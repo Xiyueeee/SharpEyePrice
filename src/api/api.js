@@ -10,7 +10,36 @@ export default {
     getTableData() {
         return request({
             method: "get",
-            url: "/api/home/getTableData",
+            url: "/home/getTableData",  ///本地的数据
+            //mock: true,
+        });
+    },
+    getCountData() {
+        return request({
+            method: "get",
+            url: "/home/getCountData",  ///api/home/getTableData
+            //mock: true,
+        });
+    },
+    getChartData() {
+        return request({
+            method: "get",
+            url: "/home/getChartData",  ///api/home/getTableData
+            //mock: true,
+        });
+    },
+    getUserData(data) {
+        return request({
+            method: "get",
+            url: "/home/getUserData",  ///api/home/getTableData
+            data,//mock: true,
+        });
+    },
+    deleteUser(data) {
+        return request({
+            method: "get",
+            url: "user/deleteUser",  ///api/home/getTableData
+            data,//mock: true,
         });
     },
 };

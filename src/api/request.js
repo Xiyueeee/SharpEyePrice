@@ -1,7 +1,10 @@
 import axios from "axios";
 import {ElMessage} from 'element-plus'
+import config from "../config";
 
-const service = axios.create();  //使用实例的方式
+const service = axios.create({
+    baseRL:config.baseApi,
+});  //使用实例的方式
 const NETWORK_ERROR = '网络错误...'
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
@@ -28,6 +31,23 @@ service.interceptors.response.use(
 
 function request(options){
     options.method = options.method || 'get';
+    //关于get请求参数的调整
+    if(options.method.toLowerCase() === 'get'){
+        options.params = options.data;
+    }
+    //对mock的开关做一个处理
+    let isMock = config.mock;
+    if(typeof options.mock !== 'undefined'){  //说明传了数据
+        isMock = options.mock;
+    }
+
+    //针对环境做一个处理
+    if(config.env === 'prod') {   //线上环境
+        //不能用mock
+        service.defaults.baseURL = config.baseApi;
+    }else{
+        service.defaults.baseURL = isMock ? config.mockApi : config.baseApi;
+    } 
     return service(options);
 }
 
