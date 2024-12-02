@@ -38,8 +38,29 @@ export default {
     deleteUser(data) {
         return request({
             method: "get",
-            url: "user/deleteUser",  ///api/home/getTableData
+            url: "/user/deleteUser",  ///api/home/getTableData
             data,//mock: true,
         });
     },
+    addUser(data) {
+        return request({
+            method: "post",
+            url: "/user/addUser",  ///api/home/getTableData
+            data,//mock: true,
+        });
+    },
+    editUser(data) {
+        return request({
+            method: "post",
+            url: "/user/editUser",  ///api/home/getTableData
+            data,//mock: true,
+        });
+    },
+    getMenu(params) {
+        return request({
+            url: '/permission/getMenu',
+            method: 'post',
+            data:params
+        })
+    }
 };

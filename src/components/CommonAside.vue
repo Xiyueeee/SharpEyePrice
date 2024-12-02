@@ -6,6 +6,7 @@
         active-text-color="#ffd04b"
         :collapse="isCollapse"
         :collapse-transition="false"
+        :default-active="activeMenu"
         >
         <h3 v-show="!isCollapse">SharpEyePrice</h3>
         <h3 v-show="isCollapse">SEP</h3>
@@ -13,6 +14,7 @@
         v-for="item in noChildren"
         :index="item.path"
         :key="item.path"
+        @click="handleMenu(item)"
         >
 
           <component class="icons" :is="item.icon"></component>
@@ -32,6 +34,7 @@
                 v-for="(subItem,subIndex) in item.children"
                 :index="subItem.path"
                 :key="subItem.path"
+                @click="handleMenu(subItem)"
             >
             <component class="icons" :is="subItem.icon"></component>
             <span>{{ subItem.label}}</span>
@@ -47,8 +50,8 @@
 <script setup>
 import {ref,computed} from 'vue'
 import {useAllDataStore} from '../stores'
-
-const list =ref([
+import {useRouter,useRoute} from 'vue-router'
+/*const list =ref([
     {
         path: '/home',
         name:'home',
@@ -93,13 +96,21 @@ const list =ref([
     }
     
 ])
-
+*/
+const list = computed(()=>store.state.menuList)
 const noChildren = computed(() => list.value.filter(item =>!item.children))
 const hasChildren = computed(() => list.value.filter(item => item.children))
 const store = useAllDataStore()
 const isCollapse = computed(()=>store.state.isCollapse)
 //width
 const width = computed(()=>store.state.isCollapse ? '64px' : '180px')
+const router = useRouter()
+const route = useRoute()
+const activeMenu = computed(()=>route.path)
+const handleMenu = (item)=>{
+    router.push(item.path)
+    store.selectMenu(item)
+}
 </script>
 
 <style lang="less" scoped>
