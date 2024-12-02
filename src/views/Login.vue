@@ -19,11 +19,17 @@ const handleLogin = async () => {
     router.push('/home')
     
 }
+
+//跳转到注册页面
+const goToRegister = () => {
+    router.push('/register')
+}
 </script>
 
 <template>
     <div class="body-login">
         <el-form :model="loginForm" class="login-container">
+            <h1>SharpEyePrice慧眼识价</h1>
             <h1>欢迎登录</h1>
             <el-form-item>
                 <el-input type="input" placeholder="请输入账号" v-model="loginForm.username">
@@ -35,6 +41,10 @@ const handleLogin = async () => {
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="handleLogin">登录</el-button>
+            </el-form-item>
+            <!--注册按钮-->
+            <el-form-item>
+                <el-button @click="goToRegister" type="link">没有账号？点击注册</el-button>
             </el-form-item>
         </el-form>
     </div>

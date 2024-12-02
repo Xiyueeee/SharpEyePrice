@@ -82,7 +82,7 @@ export const useAllDataStore = defineStore("allData", () => {
         //console.log(router.getRoutes());
         let routers = router.getRoutes()
         routers.forEach(item=>{
-            if(item.name == "main" || item.name == "login" || item.name == "404"){
+            if(item.name == "main" || item.name == "login" || item.name == "404" || item.name == "register"){
                 return;
             } else {
                 router.removeRoute(item.name)
