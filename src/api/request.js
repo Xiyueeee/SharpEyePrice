@@ -2,8 +2,10 @@ import axios from "axios";
 import {ElMessage} from 'element-plus'
 import config from "../config";
 
+
 const service = axios.create({
-    baseRL:config.baseApi,
+    baseURL:config.baseApi,
+    timeout: 10000,   //设置请求超时
 });  //使用实例的方式
 const NETWORK_ERROR = '网络错误...'
 // 添加请求拦截器
@@ -22,11 +24,15 @@ service.interceptors.response.use(
         if(code === 200){
             return data;
         }else{
-            const NETWORK_ERROR = '网络错误...';
+            //const NETWORK_ERROR = '网络错误...';
             ElMessage.error(msg || NETWORK_ERROR);
             return Promise.reject(msg || NETWORK_ERROR);
         }
-    }
+    },
+    /*(error) => {
+        ElMessage.error(NETWORK_ERROR);
+        return Promise.reject(error);
+    }*/
 );
 
 function request(options){
@@ -51,4 +57,12 @@ function request(options){
     return service(options);
 }
 
+//注册请求
+export const register = (registerForm) => {
+    return request({
+        url: '/register',
+        method: 'POST',
+        data: registerForm,
+    });
+};
 export default request;

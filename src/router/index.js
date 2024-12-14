@@ -27,13 +27,14 @@ const routes = [
     path: "/register",
     name: "register",
     component: () => import("../views/Register.vue"),
-    meta: {requiresAuth: false },   //注册页面不需要认证
+    meta: {requiresAuth: false},  //注册页面不需要认证
   },
   {
     path: "/404",
     name: "404",
     component: () => import("../views/404.vue"),
   },
+  
   {
     path: '/:pathMatch(.*)*',
     redirect: '/404',   //路径不匹配时重定向到404页面
@@ -48,6 +49,8 @@ const routers = createRouter({
 
 //路由守卫（全局前置守卫）
 routers.beforeEach((to, from, next) => {
+  console.log('Checking route guard for:', to.path);
+  //const isAuthenticated = !!userStore.token; // 检查是否有 token
   const isAuthenticated = localStorage.getItem('isLoggedIn') === 'true';   //检查是否已登录
   if (to.meta.requiresAuth && !isAuthenticated) {
     //如果目标路由需要认证且用户未登录，重定向到登录页面

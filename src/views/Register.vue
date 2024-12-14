@@ -1,14 +1,15 @@
 <script setup>
-
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import axios from 'axios'
 
 const registerForm = reactive({
-    username: '',
+    account: '',
     password: '',
     email: ''
-})
+});
+
 
 const router = useRouter()
 
@@ -27,13 +28,29 @@ const handleRegister = async () => {
     }
 
     try {
-        const res = await proxy.$api.register(registerForm)
-        if (res.success) {
+        //const res = await proxy.$api.register(registerForm)
+        console.log(registerForm)
+        const res = await axios.post('http://localhost:8080/user/register', 
+        {
+            account: registerForm.account,
+            password: registerForm.password,
+            email: registerForm.email
+        },
+        {
+            withCredentials: true,   //确保请求中携带凭证例如cookie
+            headers: {
+                'Content-Type': 'application/json',
+            }
+    }
+);
+        console.log("服务器响应：",res.data);
+    // 注册成功后跳转到登录页面
+        if (res.data.success) {
             ElMessage.success('注册成功！请登录')
             //注册成功后跳转到登录页面
             router.push('/login')
         } else {
-            ElMessage.error(res.message || '注册失败，请重试')
+            ElMessage.error(res.data.message || '注册失败，请重试')
         }
     } catch (error) {
         ElMessage.error('注册时发生错误，请稍后再试')
@@ -46,7 +63,7 @@ const handleRegister = async () => {
         <el-form :model="registerForm" class="register-container">
             <h1>用户注册</h1>
             <el-form-item label="用户名" :rules="[{ required: true, message: '请输入用户名', trigger: 'blur' }]">
-                <el-input v-model="registerForm.username" placeholder="请输入用户名"></el-input>
+                <el-input v-model="registerForm.account" placeholder="请输入用户名"></el-input>
             </el-form-item>
             <el-form-item label="密码" :rules="[{ required: true, message: '请输入密码', trigger: 'blur' }]">
                 <el-input v-model="registerForm.password" type="password" placeholder="请输入密码"></el-input>
@@ -59,6 +76,7 @@ const handleRegister = async () => {
             </el-form-item>
         </el-form>
     </div>
+
 </template>
 
 <style scoped lang="less">

@@ -2,6 +2,8 @@
 import {reactive,getCurrentInstance} from 'vue'
 import {useAllDataStore} from '../stores'
 import {useRouter} from 'vue-router'
+import { ElMessage } from 'element-plus'
+import axios from 'axios'
 const loginForm = reactive({
     username:'',
     password:''
@@ -17,13 +19,58 @@ const handleLogin = async () => {
     store.state.token = res.token
     store.addMenu(router)
     router.push('/home')
-    
+    /*try {
+        const res = await axios.post('http://localhost:8080/user/login',
+            {
+                account:loginForm.account,
+                password:loginForm.password
+            },
+            {
+            withCredentials: true,   //确保请求中携带凭证例如cookie
+            headers: {
+                'Content-Type': 'application/json',
+                }
+            }
+        );
+        console.log(res.data);
+        
+        //假设返回的res.data包含menuList和token
+        if (res.data.success) {
+            //res = await proxy.$api.getMenu(loginForm)
+            //store.updateMenuList(res.data.menuList)
+            //store.state.token = res.data.token
+            //store.addMenu(router)
+            ElMessage.success('登录成功')
+            const token = 'user-token';
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('token', token);  // 设置 token
+            console.log('Redirecting to /home...');
+            router.push('/home')
+        } else {
+            ElMessage.error(res.data.message || '登录失败，请重试')
+        }
+    } catch (error) {
+        console.error('登录失败：', error)  
+        if (error.response) {
+        // 请求已发出，服务器有响应
+        console.error('响应状态码:', error.response.status);
+        console.error('响应数据:', error.response.data);
+    } else if (error.request) {
+        // 请求已发出，但没有响应
+        console.error('请求信息:', error.request);
+    } else {
+        // 其他错误
+        console.error('错误信息:', error.message);
+    }
+        ElMessage.error('登录失败，请重试')
+    }*/
 }
 
 //跳转到注册页面
 const goToRegister = () => {
     router.push('/register')
 }
+
 </script>
 
 <template>

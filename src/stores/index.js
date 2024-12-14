@@ -56,12 +56,12 @@ export const useAllDataStore = defineStore("allData", () => {
             if (JSON.parse(localStorage.getItem("store"))) {
                 state.value = JSON.parse(localStorage.getItem("store"));
                 //
-                state.value.routerList = [];
+                state.value.routerList = [] ;
             } else {
                 return;
             }
         }
-        const menu = state.value.menuList;
+        const menu = state.value.menuList || [];
         const module = import.meta.glob("../views/**/*.vue");
         const routeArr = [];
         menu.forEach((item) => {
