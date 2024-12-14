@@ -51,7 +51,7 @@
 import {ref,computed} from 'vue'
 import {useAllDataStore} from '../stores'
 import {useRouter,useRoute} from 'vue-router'
-/*const list =ref([
+const list =ref([
     {
         path: '/home',
         name:'home',
@@ -96,8 +96,8 @@ import {useRouter,useRoute} from 'vue-router'
     }
     
 ])
-*/
-const list = computed(()=>store.state.menuList)
+
+//const list = computed(()=>store.state.menuList)
 const noChildren = computed(() => list.value.filter(item =>!item.children))
 const hasChildren = computed(() => list.value.filter(item => item.children))
 const store = useAllDataStore()

@@ -14,14 +14,24 @@ function isRoute(to) {
     let resFil = res.filter((item) => item.path === to.path);
     return resFil.length > 0;
 }
+/*
 router.beforeEach((to,from)=>{
-    if(to.path !== "/login" && !store.state.token ){
+    const store = useAllDataStore();
+    /*
+    if (!store.state.value) {
+        console.error('Store state is undefined!');
+      } else if (store.state.value.token === undefined) {
+        console.error('Token is undefined!');
+      }
+      
+    const token = store.state.value.token;
+    if(to.path !== "/login" && !token ){
         return { name: "login" };
     }
     if (!isRoute(to)) {
         return { name: "404" };
     }
-});
+});*/
 const pinia = createPinia();
 const app = createApp(App);
 

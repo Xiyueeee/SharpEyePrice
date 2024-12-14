@@ -13,7 +13,7 @@ const routes = [
         path:'/home',
         name: 'home',
         component: () => import('../views/Home.vue'),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: false },
       },   //可以在这里添加更多需要认证的子路由
     ],
   },
@@ -22,6 +22,18 @@ const routes = [
         name:'login',
         component:()=>import('../views/Login.vue'),
         meta: {requiresAuth: false },   //登录页面不需要认证
+  },
+  {
+    path: '/user',
+      name: 'user',
+      component: () => import('../views/User.vue'),
+      meta: {requiresAuth: false},  //用户管理页面不需要认证
+  },
+  {
+    path: "/mall",
+    name: "mall",
+    component: () => import("../views/Mall.vue"),
+    meta: {requiresAuth: false},  //比比价页面不需要认证
   },
   {
     path: "/register",
@@ -34,7 +46,6 @@ const routes = [
     name: "404",
     component: () => import("../views/404.vue"),
   },
-  
   {
     path: '/:pathMatch(.*)*',
     redirect: '/404',   //路径不匹配时重定向到404页面
@@ -49,13 +60,17 @@ const routers = createRouter({
 
 //路由守卫（全局前置守卫）
 routers.beforeEach((to, from, next) => {
-  console.log('Checking route guard for:', to.path);
   //const isAuthenticated = !!userStore.token; // 检查是否有 token
   const isAuthenticated = localStorage.getItem('isLoggedIn') === 'true';   //检查是否已登录
+  // const token = localStorage.getItem('token');
+  console.log('isAuthenticated:', isAuthenticated);  // 打印 isAuthenticated 的值
+  console.log('Checking route guard for:', to.path);
   if (to.meta.requiresAuth && !isAuthenticated) {
+    console.log('Redirecting to login');
     //如果目标路由需要认证且用户未登录，重定向到登录页面
     next('/login');
   } else {
+    console.log('Allowing navigation to', to.path);
     next();   //允许访问
   }
 })

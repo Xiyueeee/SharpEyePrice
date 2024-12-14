@@ -5,21 +5,21 @@ import {useRouter} from 'vue-router'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
 const loginForm = reactive({
-    username:'',
+    account:'',
     password:''
 })
 const {proxy} = getCurrentInstance()
 const store = useAllDataStore()
 const router = useRouter()
 const handleLogin = async () => {
-    const res = await proxy.$api.getMenu(loginForm)
+   /* const res = await proxy.$api.getMenu(loginForm)
     console.log(res)
     //拿到菜单以后 在哪里显示呢？
     store.updateMenuList(res.menuList)
     store.state.token = res.token
     store.addMenu(router)
-    router.push('/home')
-    /*try {
+    router.push('/home')*/
+    try {
         const res = await axios.post('http://localhost:8080/user/login',
             {
                 account:loginForm.account,
@@ -41,9 +41,14 @@ const handleLogin = async () => {
             //store.state.token = res.data.token
             //store.addMenu(router)
             ElMessage.success('登录成功')
-            const token = 'user-token';
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('token', token);  // 设置 token
+            // const token = res.data.token;  //获取token
+            // store.state.value.token = token;   //更新Pinia中的token
+            // localStorage.setItem("store", JSON.stringify(store.state.value));
+
+            // const menuList = res.data.menuList || [];
+            // store.updateMenuList(menuList);
+            //localStorage.setItem('isLoggedIn', 'true');
+            //localStorage.setItem('token', token);  // 设置 token
             console.log('Redirecting to /home...');
             router.push('/home')
         } else {
@@ -63,7 +68,7 @@ const handleLogin = async () => {
         console.error('错误信息:', error.message);
     }
         ElMessage.error('登录失败，请重试')
-    }*/
+    }
 }
 
 //跳转到注册页面
@@ -79,7 +84,7 @@ const goToRegister = () => {
             <h1>SharpEyePrice慧眼识价</h1>
             <h1>欢迎登录</h1>
             <el-form-item>
-                <el-input type="input" placeholder="请输入账号" v-model="loginForm.username">
+                <el-input type="input" placeholder="请输入账号" v-model="loginForm.account">
                 </el-input>
             </el-form-item>
             <el-form-item>
