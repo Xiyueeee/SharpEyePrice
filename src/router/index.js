@@ -42,6 +42,30 @@ const routes = [
     meta: {requiresAuth: false},  //注册页面不需要认证
   },
   {
+    path: "/1688",
+    name: "1688",
+    component: () => import("../views/1688.vue"),
+    meta: {requiresAuth: false},  //1688比价页面不需要认证
+  },
+  {
+    path: "/JD",
+    name: "JD",
+    component: () => import("../views/JD.vue"),
+    meta: {requiresAuth: false},  //京东比价页面不需要认证
+  },
+  {
+    path: "/SN",
+    name: "SN",
+    component: () => import("../views/SN.vue"),
+    meta: {requiresAuth: false},  //SN比价页面不需要认证
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import("../views/Profile.vue"),
+    meta: {requiresAuth: false},  //个人中心页面不需要认证
+  },
+  {
     path: "/404",
     name: "404",
     component: () => import("../views/404.vue"),

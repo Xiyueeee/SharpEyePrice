@@ -8,6 +8,7 @@ import {createPinia} from "pinia";
 import "./api/mock.js";
 import api from "./api/api";  //全局挂载
 import {useAllDataStore} from "./stores"
+import person from './person';
 //路由守卫
 function isRoute(to) {
     let res = router.getRoutes();
@@ -44,4 +45,5 @@ app.use(router);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component);
 }
+app.use(person);
 app.mount("#app");

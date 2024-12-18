@@ -1,6 +1,6 @@
 <script setup>
 import {reactive,getCurrentInstance} from 'vue'
-import {useAllDataStore} from '../stores'
+//import {useAllDataStore} from '../stores'
 import {useRouter} from 'vue-router'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
@@ -8,17 +8,10 @@ const loginForm = reactive({
     account:'',
     password:''
 })
-const {proxy} = getCurrentInstance()
-const store = useAllDataStore()
+//const {proxy} = getCurrentInstance()
+//const store = useAllDataStore()
 const router = useRouter()
 const handleLogin = async () => {
-   /* const res = await proxy.$api.getMenu(loginForm)
-    console.log(res)
-    //拿到菜单以后 在哪里显示呢？
-    store.updateMenuList(res.menuList)
-    store.state.token = res.token
-    store.addMenu(router)
-    router.push('/home')*/
     try {
         const res = await axios.post('http://localhost:8080/user/login',
             {
@@ -36,19 +29,7 @@ const handleLogin = async () => {
         
         //假设返回的res.data包含menuList和token
         if (res.data.success) {
-            //res = await proxy.$api.getMenu(loginForm)
-            //store.updateMenuList(res.data.menuList)
-            //store.state.token = res.data.token
-            //store.addMenu(router)
             ElMessage.success('登录成功')
-            // const token = res.data.token;  //获取token
-            // store.state.value.token = token;   //更新Pinia中的token
-            // localStorage.setItem("store", JSON.stringify(store.state.value));
-
-            // const menuList = res.data.menuList || [];
-            // store.updateMenuList(menuList);
-            //localStorage.setItem('isLoggedIn', 'true');
-            //localStorage.setItem('token', token);  // 设置 token
             console.log('Redirecting to /home...');
             router.push('/home')
         } else {

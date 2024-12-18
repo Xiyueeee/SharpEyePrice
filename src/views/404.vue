@@ -15,8 +15,8 @@ const router = useRouter();
 */
 const goHome=()=>{
     //go方法，按指定方向访问历史。如果是正数则是路由记录向前跳转，如果是负数则是向后退
-    //这里回退两个页面到跳转前的页面
-    router.go(-2)
+    //这里回退一个页面到跳转前的页面
+    router.go(-1)
 };
 
 </script>

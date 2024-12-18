@@ -10,7 +10,7 @@ const registerForm = reactive({
     email: ''
 });
 
-
+const store = useStore()
 const router = useRouter()
 
 //注册操作

@@ -79,18 +79,25 @@ const list =ref([
         iconl: 'location',
         children: [
             {
-                path: '/page1',
-                label: 'page1',
-                label: '爬虫1',
+                path: '/1688',
+                label: '1688',
+                label: '1688',
                 icon: 'setting',
-                url:'Page1'
+                url:'1688'
             },
             {
-                path: '/page2',
-                label: 'page2',
-                label: '爬虫2',
+                path: '/JD',
+                label: 'JD',
+                label: '京东',
                 icon: 'setting',
-                url:'Page2'
+                url:'JD'
+            },
+            {
+                path: '/SN',
+                label: 'SN',
+                label: '苏宁易购',
+                icon: 'setting',
+                url:'SN'
             }
         ]
     }
