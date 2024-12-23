@@ -32,6 +32,9 @@
             <h3>{{ product.name }}</h3>
             <p class="price">{{ product.price }} 元</p>
             <a :href="product.href" target="_blank" rel="noopener noreferrer">查看商品链接</a>
+
+            <!--添加到商品库按钮-->
+            <button @click="openCategoryDialog(product)">添加到商品库</button>
           </div>
         </div>
       </div>
@@ -40,11 +43,35 @@
       <div v-if="!loading && !error && !products.length" class="no-results">
         未找到相关商品
       </div>
+
+      <!-- 弹出品类选择对话框 -->
+      <div v-if="showDialog" class="dialog-overlay">
+        <div class="dialog">
+          <h3>请选择商品品类</h3>
+          <select v-model="selectedCategory">
+            <option disabled value="">请选择品类</option>
+            <option value="食品">食品</option>
+            <option value="百货">百货</option>
+            <option value="数码">数码</option>
+            <option value="服饰">服饰</option>
+            <option value="美妆">美妆</option>
+            <option value="电器">电器</option>
+            <option value="医药">医药</option>
+            <option value="运动">运动</option>
+            <option value="家居">家居</option>
+            <option value="玩乐">玩乐</option>
+          </select>
+          <div>
+            <button @click="closeCategoryDialog">取消</button>
+            <button @click="confirmCategorySelection">确认</button>
+          </div>
+        </div>
+      </div>
     </div>
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref,toRaw } from 'vue';
   import axios from 'axios';
   
   // 定义响应式数据
@@ -52,6 +79,9 @@
   const products = ref([]);
   const loading = ref(false);
   const error = ref('');
+  const showDialog = ref(false);  // 控制对话框显示
+  const selectedCategory = ref('');  // 存储选择的品类
+  const currentProduct = ref(null);  // 当前选中的商品
   
   // 商品搜索方法
   const searchProducts = async () => {
@@ -89,9 +119,97 @@
       loading.value = false;
     }
   };
+
+  // 打开品类选择对话框
+const openCategoryDialog = (product) => {
+  currentProduct.value = product;  // 保存当前商品
+  showDialog.value = true;  // 显示对话框
+};
+  // 关闭品类选择对话框
+const closeCategoryDialog = () => {
+  showDialog.value = false;
+  selectedCategory.value = '';  // 清空选择的品类
+};
+// 确认选择品类并添加商品
+const confirmCategorySelection = async () => {
+  if (!selectedCategory.value) {
+    alert('请先选择品类');
+    return;
+  }
+
+  const rawProduct = toRaw(currentProduct.value);  // 使用 toRaw 获取原始数据对象
+  console.log('Raw Product:', rawProduct);
+
+  if (!rawProduct) {
+    alert('传入的商品无效');
+    return;
+  }
+
+  let priceStr = rawProduct.price;
+  // 1. 去除人民币符号
+  let cleanedPriceStr = priceStr.replace('¥', '');
+
+  // 2. 转换为浮动类型（double）
+  let priceNum = parseFloat(cleanedPriceStr);
+
+  // 打印输出确认
+  console.log(priceNum);  // 输出：30.00
+  try {
+    // 发送请求到后端
+    const response = await axios.post('http://127.0.0.1:8080/products', {
+      name: rawProduct.name,
+      price: priceNum,
+      img_guid: rawProduct.img_guid,
+      href: rawProduct.href,
+      plat: rawProduct.plat,
+      category: selectedCategory.value  // 将选择的品类传到后端
+    },{
+      withCredentials: true,   // 确保请求中携带凭证例如cookie
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log('Response Data:', response); // 调试用，查看返回数据
+    if(response.status === 200) {
+      alert('商品已添加到商品库');
+    } else {
+      alert('添加失败');
+    }
+  } catch(err) {
+    console.error("error:", err);
+    alert("添加商品失败，请稍后再试");
+  } finally {
+    // 关闭对话框
+    closeCategoryDialog();
+  }
+};
   </script>
   
   <style scoped>
+  .dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dialog {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+  }
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+  }
   .body_JD {
       width: 100%;
       min-height: 100vh;

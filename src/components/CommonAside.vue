@@ -66,13 +66,13 @@ const list =ref([
         icon:'video-play',
         url:'Mall'
     },
-    {
-        path: '/user',
-        name:'user',
-        label: '用户管理',
-        icon: 'user',
-        url:'User'
-    },
+    // {
+    //     path: '/user',
+    //     name:'user',
+    //     label: '用户管理',
+    //     icon: 'user',
+    //     url:'User'
+    // },
     {
         path:'other',
         label: '启动爬虫',
