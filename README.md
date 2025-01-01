@@ -2,3 +2,4 @@
 
 完整前后端源代码已经放在main分支，查看git信息请前往master分支
 SharpEyePrice为后端springboot代码
+前端代码有更新，请前往master分支获取最新版本
