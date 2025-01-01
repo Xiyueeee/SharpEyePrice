@@ -13,7 +13,7 @@ const loginForm = reactive({
 const router = useRouter()
 const handleLogin = async () => {
     try {
-        const res = await axios.post('http://localhost:8080/user/login',
+        const res = await axios.post('/user/login',
             {
                 account:loginForm.account,
                 password:loginForm.password

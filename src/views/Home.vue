@@ -132,23 +132,30 @@ onMounted(()=>{
 </script>
 
 <template>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-text">SharpEyePrice</span>
+            <span class="slogan">慧眼识价，精准购物</span>
+        </div>
+    </header>
     <el-row class="home" :gutter="20">
         <el-col :span="8" style="margin-top:20px">
             <el-card shadow="hover">
                 <div class="user">
                     <img :src="getImageUrl('user')" class="user"/>
                     <div class="user-info">
-                        <p class="user-info-admin">Admin</p>
-                        <p class="user-info-p">超级管理员</p>
+                        <p class="user-info-admin">User</p>
+                        <p class="user-info-p">用户</p>
                     </div>
                 </div>
                 <div class="login-info">
-                    <p>上次登录时间：<span>2024-11-18</span></p>
+                    <p>上次登录时间：<span>2024-12-23</span></p>
                     <p>上次登录地点：<span>杭州</span></p>
                 </div>
             </el-card>
 
-            <el-card shadow="hover" class="user-table">
+            <!--el-card shadow="hover" class="user-table">
                 <el-table :data="tableData" height="250">   
                     <el-table-column
                     v-for="(val,key) in tableLabel"
@@ -158,9 +165,9 @@ onMounted(()=>{
                         
                     </el-table-column>
                 </el-table>
-            </el-card>
+            </！el-card-->
         </el-col>
-        <el-col :span="16" style="margin-top:20px">
+        <!--el-col :span="16" style="margin-top:20px">
             <div class="num">
                 <el-card
                 :body-style="{display:'flex',padding:0}"
@@ -184,11 +191,42 @@ onMounted(()=>{
                     <div ref="videoEchart" style="height:240px"></div>
                 </el-card>
             </div>
-        </el-col>
+        </!--el-col-->
     </el-row>
 </template>
 
 <style scoped lang="less">
+.header {
+  background-color: #17b3a3;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header .logo .logo-text {
+  font-size: 26px;
+  font-style: italic;
+  background: linear-gradient(45deg, #ff6f61, #d2a1ff);  /* 渐变颜色 */
+  -webkit-background-clip: text; /* 使渐变仅应用于文字 */
+  background-clip: text; /* 使渐变仅应用于文字 */
+  color: transparent; /* 使文字颜色透明 */
+}
+
+.header .logo .slogan {
+  font-size: 16px;
+  font-style: italic;
+  background: linear-gradient(45deg, #ff6f61, #d2a1ff);  /* 渐变颜色 */
+  -webkit-background-clip: text; /* 使渐变仅应用于文字 */
+  background-clip: text; /* 使渐变仅应用于文字 */
+  color: transparent; /* 使文字颜色透明 */
+}
 .home{
     height:100%;
     overflow:hidden;   

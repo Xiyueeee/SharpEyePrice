@@ -11,7 +11,7 @@
           @keyup.enter="searchProducts" 
         />
         <button @click="searchProducts">搜索</button>
-        <router-link to="/" class="go-home-btn">返回首页</router-link>
+        <router-link to="/home" class="go-home-btn">返回首页</router-link>
       </div>
   
       <!-- 加载提示 -->
@@ -98,7 +98,7 @@
   
     try {
       // 发送请求到后端
-      const response = await axios.get('http://127.0.0.1:5000/searchSN', {
+      const response = await axios.get('/searchSN', {
         params: { 
           name: name.value,
          }
@@ -156,7 +156,7 @@ const confirmCategorySelection = async () => {
   console.log(priceNum);  // 输出：30.00
   try {
     // 发送请求到后端
-    const response = await axios.post('http://127.0.0.1:8080/products', {
+    const response = await axios.post('/products', {
       name: rawProduct.name,
       price: priceNum,
       img_guid: rawProduct.img_guid,

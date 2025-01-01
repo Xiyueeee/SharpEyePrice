@@ -10,7 +10,7 @@ const registerForm = reactive({
     email: ''
 });
 
-const store = useStore()
+//const store = useStore()
 const router = useRouter()
 
 //注册操作
@@ -30,7 +30,7 @@ const handleRegister = async () => {
     try {
         //const res = await proxy.$api.register(registerForm)
         console.log(registerForm)
-        const res = await axios.post('http://localhost:8080/user/register', 
+        const res = await axios.post('/user/register', 
         {
             account: registerForm.account,
             password: registerForm.password,

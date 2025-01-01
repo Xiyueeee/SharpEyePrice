@@ -105,7 +105,7 @@
         return;
       }
       // 发送请求到后端
-      fetch('http://127.0.0.1:5000/sendPriceAlert', {
+      fetch('/sendPriceAlert', {
         method: 'POST', // 使用 POST 请求
         headers: {
           'Content-Type': 'application/json'
@@ -132,7 +132,7 @@
     },
       // 获取所有商品
       fetchAllProducts() {
-        axios.get('http://localhost:8080/products')
+        axios.get('/products')
           .then(response => {
             this.products = response.data;
           })
@@ -143,7 +143,7 @@
       
       // 根据品类获取商品
       fetchProductsByCategory(category) {
-        axios.get(`http://localhost:8080/products/category/${category}`)
+        axios.get(`/products/category/${category}`)
           .then(response => {
             this.products = response.data;
           })
@@ -246,7 +246,7 @@
   
       // 返回首页
       goHome() {
-        this.$router.push('/');
+        this.$router.push('/home');
       }
     },
     mounted() {
